@@ -156,7 +156,9 @@ public class LocationPlugin implements MethodCallHandler, StreamHandler, PluginR
                 startRequestingLocation();
             }
 
-        } else if (call.method.equals("hasPermission")) {
+        } else if (call.method.equals(
+                "hasPermission") || call.method.equals(
+                "hasPermissionInBackground")) {
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
                 result.success(1);
                 return;

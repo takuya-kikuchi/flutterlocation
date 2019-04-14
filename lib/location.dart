@@ -65,6 +65,10 @@ class Location {
   Future<bool> hasPermission() =>
       _channel.invokeMethod('hasPermission').then((result) => result == 1);
 
+  /// Checks if the app has permission to access location even if the app is in background.
+  Future<bool> hasPermissionInBackground() =>
+      _channel.invokeMethod('hasPermissionInBackground').then((result) => result == 1);
+
   /// Request the permission to access the location
   Future<bool> requestPermission() =>
       _channel.invokeMethod('requestPermission').then((result) => result == 1);

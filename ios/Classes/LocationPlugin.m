@@ -101,6 +101,12 @@
         } else {
             result(@(0));
         }
+    } else if ([call.method isEqualToString:@"hasPermissionInBackground"]) {
+        if ([self isPermissionGrantedInBackground]) {
+            result(@(1));
+        } else {
+            result(@(0));
+        }
     } else if ([call.method isEqualToString:@"requestPermission"]) {
         if ([self isPermissionGranted]) {
             result(@(1));
@@ -167,6 +173,34 @@
             break;
     }
     
+    return isPermissionGranted;
+}
+
+-(BOOL) isPermissionGrantedInBackground {
+    BOOL isPermissionGranted = NO;
+    switch ([CLLocationManager authorizationStatus]) {
+        case kCLAuthorizationStatusAuthorizedAlways:
+            // Location services are available
+            isPermissionGranted = YES;
+            break;
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+            // Location services are available
+            isPermissionGranted = NO;
+            break;
+        case kCLAuthorizationStatusDenied:
+        case kCLAuthorizationStatusRestricted:
+            // Location services are requested but user has denied / the app is restricted from getting location
+            isPermissionGranted = NO;
+            break;
+        case kCLAuthorizationStatusNotDetermined:
+            // Location services never requested / the user still haven't decide
+            isPermissionGranted = NO;
+            break;
+        default:
+            isPermissionGranted = NO;
+            break;
+    }
+
     return isPermissionGranted;
 }
 
